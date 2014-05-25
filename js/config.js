@@ -7,7 +7,10 @@ window["gameConfig"] = {
 
   }
   , mechanics : {
-    maxFill: 0.5
-    , minVowels: 0.4
+    fill: 0.5
+    , odds: {
+      vowel: 0.4
+      , y: 0.05
+    } 
   }
 }
