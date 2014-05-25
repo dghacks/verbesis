@@ -1,0 +1,1 @@
+window.gameConfig={tile:{},grid:{rows:6,cols:6},mechanics:{maxFill:.5,minVowels:.4}};

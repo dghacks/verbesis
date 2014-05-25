@@ -1,0 +1,44 @@
+.tile {
+  float: left;
+  margin: 5px;
+  height: 50px; }
+  .tile .face {
+    width: 60px;
+    height: 55px;
+    background-color: #BDCCBC;
+    z-index: 10;
+    position: relative;
+    color: white;
+    font-size: 33px;
+    font-family: sans-serif;
+    text-align: center;
+    border-radius: 10px; }
+    .tile .face span {
+      top: 9px;
+      position: relative; }
+  .tile .base {
+    width: 60px;
+    height: 55px;
+    position: relative;
+    display: block;
+    background-color: #828C81;
+    z-index: 9;
+    top: -50px;
+    border-radius: 10px; }
+  .tile.consentent .face {
+    background-color: #FF6250; }
+  .tile.consentent .base {
+    background-color: #BF493C; }
+  .tile.vowel .face {
+    background-color: #509BFF; }
+  .tile.vowel .base {
+    background-color: #3C74BF; }
+  .tile.word .face {
+    background-color: #B0CC3E; }
+  .tile.word .base {
+    background-color: #798C2B; }
+
+.row {
+  height: 60px;
+  margin-bottom: 10px;
+  float: none; }

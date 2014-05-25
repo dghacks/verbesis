@@ -1,0 +1,6 @@
+/**
+ * Tile class
+ * @param {int} x     X coordinate of tile
+ * @param {int} y     Y coordinate of tile
+ * @param {char, bool} value Value of the tile. Either a letter [char] or false if the tile is empty
+ */function Tile(e,t,n){var r=["b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","z"],i=["a","e","i","o","u","y"];this.x=e;this.y=t;this.value=n?n:!1;this.elem={tile:$("<div>").addClass("tile"),face:$("<div>").addClass("face"),base:$("<div>").addClass("base"),text:$("<span>")};if(n){$(this.elem.text).html(n);if(r.indexOf(n)>=0){console.log("con");$(this.elem.tile).addClass("consentent")}else if(i.indexOf(n)>=0){console.log("vow");$(this.elem.tile).addClass("vowel")}}$(this.elem.face).append(this.elem.text);$(this.elem.tile).append(this.elem.face,this.elem.base)}function Grid(e,t){this.elem=$("<div>").addClass("grid");this.grid=[];for(var n=0;n<e;n++){this.grid[n]=[];var r=$("<div>").addClass("row");for(var i=0;i<t;i++){var s=new Tile(n,i,"b");this.grid[n][i]=s;$(r).append(s.elem.tile)}$(this.elem).append(r)}console.log(this.grid)}Grid.prototype.getTile=function(e,t){return this.grid[e][t]};Grid.prototype.shiftRow=function(e,t){};Grid.prototype.shiftCol=function(e,t){};Grid.prototype.findWords=function(){};$(function(){var e=new Grid(10,10);$("body").append(e.elem);console.log(e.getTile(2,2))});

@@ -1,0 +1,71 @@
+.tile {
+    float: left;
+    margin: 5px;
+    height: 50px;
+
+    .face {
+        width: 60px;
+        height: 55px;
+        background-color: #BDCCBC;
+        z-index: 10;
+        position: relative;
+        color: white;
+        font-size: 33px;
+        font-family: sans-serif;
+        text-align: center;
+        border-radius: 10px;
+        
+        span {
+            top: 9px;
+            position: relative;
+        }
+    }
+
+    .base {
+        width: 60px;
+        height: 55px;
+        position: relative;
+        display: block;
+        background-color: #828C81;
+        z-index: 9;
+        top: -50px;
+        border-radius: 10px;
+    }
+
+    &.consentent {
+      .face {
+          background-color: #FF6250;
+      }
+      .base {
+          background-color: #BF493C;
+      }
+    }
+
+    &.vowel {
+      .face {
+          background-color: #509BFF;
+      }
+      .base {
+          background-color: #3C74BF;
+      }
+    }
+
+    &.word {
+      .face {
+          background-color: #B0CC3E;
+      }
+      .base {
+          background-color: #798C2B;
+      }
+    }
+
+
+}
+
+.row {
+    height: 60px;
+    margin-bottom: 10px;
+    float: none;
+}
+
+
