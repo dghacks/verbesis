@@ -6,7 +6,7 @@
  */
 function Tile(x, y, value) {
 
-  var consentents = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z']
+  var consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z']
     , vowels = ['a', 'e', 'i', 'o', 'u', 'y']
 
   this.x = x
@@ -23,9 +23,9 @@ function Tile(x, y, value) {
   if(value){
     $(this.elem.text).html(value)
 
-    if(consentents.indexOf(value) >= 0){
+    if(consonants.indexOf(value) >= 0){
       console.log('con')
-      $(this.elem.tile).addClass('consentent')
+      $(this.elem.tile).addClass('consonant')
 
     }else if(vowels.indexOf(value) >= 0){
       console.log('vow')
@@ -47,12 +47,18 @@ function Grid(width, height) {
   this.elem = $('<div>').addClass('grid')
   this.grid = []
 
-  for(var row = 0; row < width; row++) {
-    this.grid[row] = []
-    var currentRow = $("<div>").addClass('row')
-    for(var col = 0; col < height; col++){
+  // row -> y
+  // col -> x
 
-      var tile = new Tile(row, col, 'b')
+  for(var row = 0; row < height; row++) {
+    this.grid[row] = []
+
+    var currentRow = $("<div>").addClass('row')
+
+    
+    for(var col = 0; col < width; col++){
+
+      var tile = new Tile(col, row, 'b')
       this.grid[row][col] = tile
 
       $(currentRow).append(tile.elem.tile)
@@ -102,13 +108,98 @@ Grid.prototype.findWords = function(){
 
 }
 
+function Menu(){
+  this.rows = 6
+  this.cols = 6
+  this.minFill = 0.4
+  this.maxFill = 0.6
+  this.ele = $('.menuOuterContainer')
+  this.doneCallback
+  this.controls = {
+    sizeUp: $('.menuContent>.sizeSelector>.up')
+    , sizeDown: $('.menuContent>.sizeSelector>.down')
+    , solo: $('.menuContent>.menuNavigation>.solo')
+    , versus: $('.menuContent>.menuNavigation>.versus')
+  }
+  this.output = {
+    gridSize: $('.menuContent>.sizeSelector>.gridSize')
+  }
+
+  var that = this
+  $(this.controls.sizeUp).on('click', function(){
+    if(that.rows < 12 && that.cols < 12){
+      that.rows++
+      that.cols++
+    }
+    that.renderOutput()
+  })
+  $(this.controls.sizeDown).on('click', function(){
+    if(that.rows > 4 && that.cols > 4){
+      that.rows--
+      that.cols--
+    }
+    that.renderOutput()
+  })
+  $(this.controls.solo).on('click', function(){
+    window['game'].rows = that.rows
+    window['game'].cols = that.cols
+    window['game'].mode = 'solo'
+    that.animateOut()
+    typeof that.doneCallback === "function" && that.doneCallback(that)
+  })
+  $(this.controls.versus).on('click', function(){
+    // window['game'].rows = that.rows
+    // window['game'].cols = that.cols
+    // window['game'].mode = 'versus'
+    // that.animateOut()
+    // typeof that.doneCallback === "function" && that.doneCallback(that)
+    alert("Sorry, Versus mode isn't done yet. Come back soon!")
+  })
+
+  this.renderOutput()
+  this.animateIn()
+}
+
+Menu.prototype.renderOutput = function(){
+  $(this.output.gridSize).html(this.rows+'x'+this.cols)
+}
+
+Menu.prototype.animateIn = function(){
+  $(this.ele).animate({
+      left: '0px'
+    }, 600)
+}
+
+Menu.prototype.animateOut = function(){
+  $(this.ele).animate({
+      left: '2000px'
+    }, 300, function(){
+      $(this).hide()
+    })
+}
+
+Menu.prototype.done = function(callback){
+  this.doneCallback = callback
+}
+
 $(function() {
 
-  var g = new Grid(10, 10)
+  window['game'] = {
+    state: 'menu' //menu, playing, ended
+    , mode: null  //solo, versus
+    , menu: new Menu()
+    , grid: null
+    , rows: null
+    , cols: null
+    , minFill: null
+    , maxFill: null
 
-  $('body').append(g.elem)
+  }
 
-  console.log(g.getTile(2,2))
+  game.menu.done(function(){
+    game.grid = new Grid(game.rows, game.cols)
+    $('.gridContainer').append(game.grid.elem)
+  });
 
 })
 

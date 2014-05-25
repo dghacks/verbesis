@@ -1,61 +1,133 @@
-function WordList(words){
+function WordList(words, callback){
 
   // Remove duplicates from the list
   var possible = words.filter(function(elem, pos) {
     return words.indexOf(elem) == pos;
   })
 
-  console.log(possible)
+  //console.log(possible)
 
-  var valid = possible
+  var checkCounter = 1
+    , requestCounter = 1
+    , callbackCounter = 1
 
-  var apiRequest = function(list) {
-    // var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
-    // window[callbackName] = function(data) {
-    //     delete window[callbackName];
-    //     document.removeChild(script);
-    //     callback(data);
-    // };
+  var apiRequest = function(list, callback) {
 
-    // var script = document.createElement('script');
-    // script.src = (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
-    // document.appendChild(script);
+    //console.log("request ", requestCounter++, ": ", list)
+
+    var callbackName = 'jsonp_callback_' + new Date().getTime() + "" + Math.floor(Math.random()*1000)
+      , requestString = list.join(',')
+      , requestUrl = "http://api.pearson.com/v2/dictionaries/ldoce5/entries?limit=25&headword=" + requestString + "&jsonp=" + callbackName
+    
+    window[callbackName] = function(data) {
+
+        document.head.removeChild(window[callbackName]["script"])
+
+        delete window[callbackName]
+
+        callback(data)
+    };
+
+    window[callbackName]["script"] = document.createElement('script')
+    window[callbackName]["script"].src =  requestUrl
+
+    document.head.appendChild(window[callbackName]["script"])
   }
 
-  var apiCheck = function(list) {
+  var valid = []
+
+  var apiCheck = function(list, callback) {
+
     // The array is empty, no match
-    if(list.length == 0) return false
+    if(list.length == 0){
+      callback(list)
+      return false
+    }
 
-    //var apiResult = apiRequest() //true or false
+    apiRequest(list, function (data){
 
-    // if(!apiResult){
-    //   for(var i = 0; i < list.length; i++){
-    //     var index = valid.indexOf(list[i])
-    //     valid.splice(index, 1)
-    //   }
-    //   return false
-    // }else if()
+      if(data.count == 0){
+        callback()
+        return false
+      }else if(list.length == 1){
+        valid.push(list[0])
+        callback()
+        return true
+      }
 
-    var middleIndex = Math.ceil(list.length/2)
-      , left = list.slice(0, middleIndex)
-      , right = list.slice(middleIndex)
-      , leftResult = apiCheck(left)
-      , rightResult = apiCheck(right)
+      var pivot = Math.ceil(list.length/2)
+        , left = list.slice(0, pivot)
+        , right = list.slice(pivot)
+        , race = 0
 
+      apiCheck(left, function (data){
+        //console.log('valid: ', valid)
+        if(race == 1){
+          callback(list)
+        }else{
+          race++
+        }
+      })
+      apiCheck(right, function (data){
+        //console.log('valid: ', valid)
+        if(race == 1){
+          callback(list)
+        }else{
+          race++
+        }
+      })
 
-
-      console.log(left, right)
+    })
 
   }
 
-  apiCheck(possible)
+  apiCheck(possible, function() {
+    this.words = valid
+    typeof callback === "function" && callback()
+  })
 
   //console.log(possible)
 
-
 }
 
-console.log("")
-l1 = new WordList(["dog", "hka", "bar", "watch", "dog", "asdad", "rat"])
-console.log("")
-l2 = new WordList(["dog", "hka", "bar", "watch", "dog", "asdad"])
+function Word(word, callback){
+  this.isValid = true
+  var that = this
+  if(word.length <= 1) this.isValid = false
+  var checkWord = function(callback) {
+    var callbackName = 'jsonp_callback_' + new Date().getTime() + "" + Math.floor(Math.random()*1000)
+      , requestUrl = "http://api.pearson.com/v2/dictionaries/ldoce5/entries?limit=25&headword=" + word + "&jsonp=" + callbackName
+    
+    window[callbackName] = function(data) {
+
+        document.head.removeChild(window[callbackName]["script"])
+
+        delete window[callbackName]
+
+        callback(data)
+    };
+
+    window[callbackName]["script"] = document.createElement('script')
+    window[callbackName]["script"].src =  requestUrl
+
+    document.head.appendChild(window[callbackName]["script"])
+  }
+
+  checkWord(function(data){
+    console.log(data)
+    if(data.count == 0){
+      that.isValid = false
+    }
+    typeof callback === "function" && callback()
+  })
+}
+
+l2 = new Word("bad", function(){
+  console.log(l2)
+})
+
+//l1 = new WordList(["asd"])
+// console.log("")
+ // l2 = new WordList(["asdf", "hog", "hka", "bar", "watch", "dog", "asdad", "rabbit", "doll"], function(){
+ //  console.log(this.words)
+ // })

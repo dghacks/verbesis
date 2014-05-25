@@ -1,3 +1,154 @@
+body{
+    font-family: 'Francois One', Helvetica, Arial, sans-serif;
+    background-color: #051F24;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.mainContainer{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+
+}
+.menuOuterContainer{
+
+    width: 600px;
+    height: 530px;
+    position: relative;
+    margin: 30px auto;
+    .menuBevel {
+        width: 600px;
+        height: 530px;
+        background-color: #23434C;
+        position: relative;
+        top: -500px;
+        border-radius: 20px;
+        z-index: 99;
+    }
+}
+.menuContainer{
+    width: 600px;
+    height: 500px;
+    background-color: #407B8C;
+    position: relative;
+    z-index: 100;
+    border-radius: 20px;
+    
+    .menuContent{
+        margin: 20px;
+        position: relative;
+        top: 20px;
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 40px;
+            position: relative;
+            display: block;
+        }
+        h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+            margin-bottom: 5px;
+            position: relative;
+            display: block;
+        }
+        button {
+            border: none;
+            height: 70px;
+            font-family: "Francois One";
+            font-size: 40px;
+            border-bottom: 10px;
+            float: left;
+            position: relative;
+
+        }
+        button:active{
+            border-bottom:4px;
+            top: 6px;
+            height: 66px;
+        }
+        .sizeSelector{
+            margin: 0 auto;
+            width: 310px;
+            height: 80px;
+            button{
+                
+                width: 70px;
+                
+                background-color: #2ACCA6;
+                border-bottom: 10px solid #104C3E;
+                color: #104C3E;
+            }
+            button:active{
+                border-bottom:4px solid #104C3E;
+            }
+            span{
+                border: none;
+                height: 60px;
+                width: 130px;
+                margin: 0 20px;
+                font-family: "Francois One";
+                font-size: 40px;
+                background-color: #2ACCA6;
+                border-bottom: 10px solid #104C3E;
+                color: #104C3E;
+                display: block;
+                float: left;
+                text-align: center;
+            }
+        }
+        .menuNavigation{
+            position: relative;
+            margin: 10px auto;
+            width: 310px;
+            button{
+                width: 310px;
+                background-color: #2ACCA6;
+                border-bottom: 10px solid #104C3E;
+                color: #104C3E;
+                margin-bottom: 10px;
+
+            }
+            button:active{
+                border-bottom:4px solid #104C3E;
+                margin-bottom: 14px;
+            }
+
+            button.solo{
+                background-color: #FDFD52;
+                border-bottom: 10px solid #818131;
+                color: #5A5A25;
+            }
+            button.solo:active{
+                border-bottom: 4px solid #818131;
+
+            }
+
+            button.versus{
+                background-color: #CC372A;
+                border-bottom: 10px solid #691F19;
+                color: #5F130D;
+            }
+            button.versus:active{
+                border-bottom: 4px solid #691F19;
+
+            }
+
+        }
+    }
+
+    
+
+}
+
 .tile {
     float: left;
     margin: 5px;
@@ -14,7 +165,7 @@
         font-family: sans-serif;
         text-align: center;
         border-radius: 10px;
-        
+
         span {
             top: 9px;
             position: relative;
@@ -32,7 +183,7 @@
         border-radius: 10px;
     }
 
-    &.consentent {
+    &.consonant {
       .face {
           background-color: #FF6250;
       }
