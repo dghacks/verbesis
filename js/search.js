@@ -122,9 +122,22 @@ function Word(word, callback){
   })
 }
 
-l2 = new Word("bad", function(){
-  console.log(l2)
-})
+function RandomWords(minChars, maxChars) {
+  this.words = []
+
+}
+
+RandomWords.prototype.getWords = function() {
+  return this.words
+}
+
+var a = new RandomWords(20, 25)
+
+words = a.getWords()
+
+// l2 = new Word("bad", function(){
+//   console.log(l2)
+// })
 
 //l1 = new WordList(["asd"])
 // console.log("")
