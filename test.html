@@ -9,7 +9,8 @@
   <body>
   
     <div class="mainContainer">
-      <div class="menuOuterContainer" style="left:-2000px">
+
+      <!-- <div class="menuOuterContainer" style="left:-2000px">
         <div class="menuContainer">
           <div class="menuContent">
             <h1>Verbesis</h1>
@@ -26,13 +27,37 @@
           </div>
         </div>
         <div class="menuBevel"></div>
-      </div>
+      </div> -->
+
       <div class="gridContainer">
         
       </div>
+
     </div>
 
     <script src="js/search.js"></script>
     <script src="js/game.js"></script>
+    <script>
+
+      $(function() {
+
+        window['game'] = {
+          state: 'playing' //menu, playing, ended
+          , mode: 'solo'  //solo, versus
+          , menu: null
+          , grid: null
+          , rows: 6
+          , cols: 6
+          , minFill: null
+          , maxFill: null
+
+        }
+
+          game.grid = new Grid(game.rows, game.cols)
+          $('.gridContainer').append(game.grid.elem)
+
+      })
+
+    </script>
   </body>
 </html>

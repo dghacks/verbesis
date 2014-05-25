@@ -113,6 +113,11 @@ button:focus {
         color: #5F130D; }
       .menuContainer .menuContent .menuNavigation button.versus:active {
         border-bottom: 4px solid #691F19; }
+  .menuContainer .gridContainer {
+    width: 600px;
+    height: 600px;
+    margin: 40px auto;
+    background-color: #1A5B7F; }
 
 .tile {
   float: left;

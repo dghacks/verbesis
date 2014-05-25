@@ -2,23 +2,62 @@
 <html>
   <head>
     <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="https://code.jquery.com/jquery-latest.js"></script>
   </head>
   <body>
+  
+    <div class="mainContainer">
+      <div class="menuOuterContainer" style="left:-2000px">
+        <div class="menuContainer">
+          <div class="menuContent">
+            <h1>Verbesis</h1>
+            <h2>Grid Size</h2>
+            <div class="sizeSelector">
+              <button class="down" type="button">-</button><span class="gridSize">8x8</span><button class="up" type="button">+</button>
+            </div>
 
-    <div style="display:none;">
-    <div class="tile">
-      <div class="face"></div>
-      <div class="extrude"></div>
-    </div>
-
-    </div>
-
-    <div class="grid">
+            <h2>Game Mode</h2>
+            <div class="menuNavigation">
+              <button class="solo" type="button">Solo</button>
+              <button class="versus" type="button">Versus</button>
+            </div>
+          </div>
+        </div>
+        <div class="menuBevel"></div>
+      </div>
+      <div class="gridContainer">
         
-        
+      </div>
     </div>
-  <script src="js/main.js"></script>
+
+    <script src="js/search.js"></script>
+    <script src="js/game.js"></script>
+    <script>
+
+      $(function() {
+        window['game'] = {
+          state: 'menu' //menu, playing, ended
+          , mode: null  //solo, versus
+          , menu: new Menu()
+          , grid: null
+          , rows: null
+          , cols: null
+          , minFill: null
+          , maxFill: null
+
+        }
+
+        game.menu.done(function(){
+          delete game.menu
+          game.menu = null
+          game.grid = new Grid(game.rows, game.cols)
+          $('.gridContainer').append(game.grid.elem)
+        });
+
+      })
+
+    </script>
   </body>
 </html>

@@ -182,24 +182,5 @@ Menu.prototype.done = function(callback){
   this.doneCallback = callback
 }
 
-$(function() {
 
-  window['game'] = {
-    state: 'menu' //menu, playing, ended
-    , mode: null  //solo, versus
-    , menu: new Menu()
-    , grid: null
-    , rows: null
-    , cols: null
-    , minFill: null
-    , maxFill: null
-
-  }
-
-  game.menu.done(function(){
-    game.grid = new Grid(game.rows, game.cols)
-    $('.gridContainer').append(game.grid.elem)
-  });
-
-})
 
