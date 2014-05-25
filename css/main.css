@@ -113,11 +113,28 @@ button:focus {
         color: #5F130D; }
       .menuContainer .menuContent .menuNavigation button.versus:active {
         border-bottom: 4px solid #691F19; }
-  .menuContainer .gridContainer {
-    width: 600px;
-    height: 600px;
-    margin: 40px auto;
-    background-color: #1A5B7F; }
+
+.gameContainer {
+  margin: 40px auto;
+  position: relative; }
+  .gameContainer .gridContainer {
+    padding: 20px;
+    margin: auto auto;
+    background-color: #1A5B7F;
+    border-radius: 20px;
+    position: relative; }
+  .gameContainer .leftPane {
+    width: 25px;
+    height: 25px; }
+  .gameContainer .rightPane {
+    width: 25px;
+    height: 25px; }
+  .gameContainer .topPane {
+    width: 25px;
+    height: 25px; }
+  .gameContainer .bottomPane {
+    width: 25px;
+    height: 25px; }
 
 .tile {
   float: left;

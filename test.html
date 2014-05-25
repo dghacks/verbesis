@@ -29,9 +29,20 @@
         <div class="menuBevel"></div>
       </div> -->
 
-      <div class="gridContainer">
-        
+      <div class="gameContainer" style="top: -2000px">
+
+        <div class="leftPane"></div>
+        <div class="middlePane">
+
+          <div class="topPane"></div>
+          <div class="gridContainer"></div>
+
+          <div class="bottomPane"></div>
+          
+        </div>
+        <div class="rightPane"></div>
       </div>
+
 
     </div>
 
@@ -54,8 +65,28 @@
         }
 
           game.grid = new Grid(game.rows, game.cols)
-          $('.gridContainer').append(game.grid.elem)
+          var min = Math.floor(game.grid.width*game.grid.height*0.4)
+            , max = Math.floor(game.grid.width*game.grid.height*0.6)
 
+            console.log(min, max)
+          var words = new RandomWords(min, max)
+
+          console.log(words)
+
+          words.onFinish(function(data){
+            game.grid.randomDistribute(data.join(''))
+          })
+
+
+          $('.gridContainer').append(game.grid.elem)
+          var width = parseInt($('.tile').css('width')) + parseInt($('.tile').css('margin-left')) + parseInt($('.tile').css('margin-right'))
+            , height = parseInt($('.tile').css('height')) + parseInt($('.tile').css('margin-top')) + parseInt($('.tile').css('margin-bottom'))
+          $('.gameContainer').css({
+            width: (width*game.rows) + 50
+            , height: ((height+10)*game.cols) + 50
+          }).animate({
+            top: 0
+          }, 500)
       })
 
     </script>

@@ -124,12 +124,11 @@ function Word(word, callback){
 
 function RandomWords(minChars, maxChars) {
   this.words = []
+  this.done = false
 
   var that = this
 
   var numChars = 0
-
-
 
   var parseData = function(data) {
     var lastRequest = data
@@ -145,7 +144,8 @@ function RandomWords(minChars, maxChars) {
     } /*else if (numChars > minChars) {
       //to do: meet minChar as close as possible with other words in object
     }*/ else {
-      console.log(that.words)
+      that.done = true
+      typeof that.callback == "function" && that.callback(that.words)
     }
   }
 
@@ -177,9 +177,13 @@ RandomWords.prototype.getWords = function() {
   return this.words
 }
 
-var a = new RandomWords(200, 300)
+RandomWords.prototype.onFinish = function(callback) {
+  this.callback = callback
+}
 
-words = a.getWords()
+// var a = new RandomWords(200, 300)
+
+// words = a.getWords()
 
 // l2 = new Word("bad", function(){
 //   console.log(l2)

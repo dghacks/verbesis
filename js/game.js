@@ -6,8 +6,8 @@
  */
 function Tile(x, y, value) {
 
-  var consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z']
-    , vowels = ['a', 'e', 'i', 'o', 'u', 'y']
+  this.consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z']
+  this.vowels = ['a', 'e', 'i', 'o', 'u', 'y']
 
   this.x = x
   this.y = y
@@ -20,22 +20,26 @@ function Tile(x, y, value) {
     , text: $('<span>')
   }
 
-  if(value){
-    $(this.elem.text).html(value)
-
-    if(consonants.indexOf(value) >= 0){
-      console.log('con')
-      $(this.elem.tile).addClass('consonant')
-
-    }else if(vowels.indexOf(value) >= 0){
-      console.log('vow')
-      $(this.elem.tile).addClass('vowel')
-    }
-  }
-
   $(this.elem.face).append(this.elem.text)
   $(this.elem.tile).append(this.elem.face, this.elem.base)
 
+  this.setValue(value)
+
+}
+
+Tile.prototype.setValue = function(value) {
+  if(value){
+    $(this.elem.text).html(value)
+
+    if(this.consonants.indexOf(value) >= 0){
+      //console.log('con')
+      $(this.elem.tile).addClass('consonant')
+
+    }else if(this.vowels.indexOf(value) >= 0){
+      //console.log('vow')
+      $(this.elem.tile).addClass('vowel')
+    }
+  }
 }
 
 /**
@@ -46,6 +50,8 @@ function Tile(x, y, value) {
 function Grid(width, height) {
   this.elem = $('<div>').addClass('grid')
   this.grid = []
+  this.width = width
+  this.height = height
 
   // row -> y
   // col -> x
@@ -54,22 +60,22 @@ function Grid(width, height) {
     this.grid[row] = []
 
     var currentRow = $("<div>").addClass('row')
-
+      , leftArrow  = $("<div>").addClass('arrow left')
     
     for(var col = 0; col < width; col++){
 
-      var tile = new Tile(col, row, 'b')
+      var tile = new Tile(col, row, false)
       this.grid[row][col] = tile
 
       $(currentRow).append(tile.elem.tile)
 
     }
-
+    var reg = /^[a-z]/
     $(this.elem).append(currentRow)
   }
 
 
-  console.log(this.grid)
+ // console.log(this.grid)
 }
 
 /**
@@ -105,6 +111,58 @@ Grid.prototype.shiftCol = function(col, direction){
 }
 
 Grid.prototype.findWords = function(){
+
+}
+
+Grid.prototype.randomDistribute = function(words){
+
+  // this.grid
+  
+ // console.log(words)
+
+  words = words.split('')
+
+  for(var i = words.length-1; i < this.width*this.height; i++){
+    //console.log(i)
+    words.push(false)
+  }
+
+
+  var shuffle = function (array) {
+      var counter = array.length, temp, index;
+
+      // While there are elements in the array
+      while (counter > 0) {
+          // Pick a random index
+          index = Math.floor(Math.random() * counter);
+
+          // Decrease counter by 1
+          counter--;
+
+          // And swap the last element with it
+          temp = array[counter];
+          array[counter] = array[index];
+          array[index] = temp;
+      }
+
+      return array;
+  }
+
+
+ // console.log(words)
+  words = shuffle(words)
+
+
+
+  var i = 0;
+  for(var r = 0; r < this.height; r++){
+   // console.log(1)
+    for(var c = 0; c < this.width; c++){
+     // console.log(this.getTile(c, r))
+      this.getTile(c, r).setValue(words[i])
+      i++;
+    } 
+  }
 
 }
 

@@ -144,15 +144,42 @@ button:focus {
 
         }
     }
-
-.gridContainer{
-    width: 600px;
-    height: 600px;
-    margin: 40px auto;
-    background-color: #1A5B7F;
 }
 
+.gameContainer{
+        margin: 40px auto;
+        position: relative;
+    .gridContainer{
+        //width: 600px;
+        //height: 600px;
+        padding: 20px;
+        margin: auto auto;
+        background-color: #1A5B7F;
+        border-radius: 20px;
+        position: relative;
+    }
+
+    .leftPane {
+        width: 25px;
+        height: 25px;
+    }
+    .rightPane {
+        width: 25px;
+        height: 25px;
+    }
+    .topPane {
+        width: 25px;
+        height: 25px;
+    }
+    .bottomPane {
+        width: 25px;
+        height: 25px;
+    }
+
 }
+
+
+
 
 .tile {
     float: left;

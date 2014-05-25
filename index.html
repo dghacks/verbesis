@@ -7,7 +7,9 @@
     <script src="https://code.jquery.com/jquery-latest.js"></script>
   </head>
   <body>
-  
+    <div class="wordlist">
+      
+    </div>
     <div class="mainContainer">
       <div class="menuOuterContainer" style="left:-2000px">
         <div class="menuContainer">
@@ -27,9 +29,25 @@
         </div>
         <div class="menuBevel"></div>
       </div>
-      <div class="gridContainer">
+      <!-- <div class="gridContainer" style="top: -2000px">
         
+      </div> -->
+
+      <div class="gameContainer" style="top: -2000px">
+
+        <div class="leftPane"></div>
+        <div class="middlePane">
+
+          <div class="topPane"></div>
+          <div class="gridContainer"></div>
+
+          <div class="bottomPane"></div>
+          
+        </div>
+        <div class="rightPane"></div>
       </div>
+
+
     </div>
 
     <script src="js/search.js"></script>
@@ -52,8 +70,50 @@
         game.menu.done(function(){
           delete game.menu
           game.menu = null
+
           game.grid = new Grid(game.rows, game.cols)
+          var min = Math.floor(game.grid.width*game.grid.height*0.4)
+            , max = Math.floor(game.grid.width*game.grid.height*0.6)
+
+           // console.log(min, max)
+          var words = new RandomWords(min, max)
+
+          for(var i = 0; i < words.length; i++){
+           // console.log("#####")
+            $('.wordlist').append("<h2>"+words[i]+"</h2>")
+          }
+
+
+          console.log(words)
+
+          words.onFinish(function(data){
+            game.grid.randomDistribute(data.join(''))
+          })
+
+
           $('.gridContainer').append(game.grid.elem)
+          var width = parseInt($('.tile').css('width')) + parseInt($('.tile').css('margin-left')) + parseInt($('.tile').css('margin-right'))
+            , height = parseInt($('.tile').css('height')) + parseInt($('.tile').css('margin-top')) + parseInt($('.tile').css('margin-bottom'))
+          $('.gameContainer').css({
+            width: (width*game.rows) + 50
+            , height: ((height+10)*game.cols) + 50
+          })
+          $('.gameContainer').animate({
+            top: 0
+          }, 1000)
+
+          // game.grid = new Grid(game.rows, game.cols)
+          // $('.gridContainer').append(game.grid.elem)
+
+          // var width = parseInt($('.tile').css('width')) + parseInt($('.tile').css('margin-left')) + parseInt($('.tile').css('margin-right'))
+          //   , height = parseInt($('.tile').css('height')) + parseInt($('.tile').css('margin-top')) + parseInt($('.tile').css('margin-bottom'))
+          // $('.gridContainer').css({
+          //   width: width*game.rows
+          //   , height: (height+10)*game.cols
+          // }).animate({
+          //   top: 0
+          // }, 1000)
+
         });
 
       })
