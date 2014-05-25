@@ -29,7 +29,7 @@ for(var i = 0; i < numLetters; i++){
     
     letters[i] = {}
 
-    while(!(letters[i]['x'] && !letters[i]['y'])){
+    while(!(letters[i]['x'] && !letters[i]['y'])){ // logic????
         var tempX = Math.floor(Math.random()*config.rows)
           , tempY = Math.floor(Math.random()*config.cols)
         

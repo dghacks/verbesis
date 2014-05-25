@@ -125,13 +125,59 @@ function Word(word, callback){
 function RandomWords(minChars, maxChars) {
   this.words = []
 
+  var that = this
+
+  var numChars = 0
+
+
+
+  var parseData = function(data) {
+    var lastRequest = data
+    var currWord = lastRequest.results[0].headword
+
+    currWord = currWord.split(/[^A-Za-z]/).filter(function(n){return !!n }).join('').toLowerCase()
+    console.log(currWord)
+    numChars += currWord.length
+    that.words.push(currWord)
+    
+    if (numChars < minChars) {
+      apiRequest()
+    } /*else if (numChars > minChars) {
+      //to do: meet minChar as close as possible with other words in object
+    }*/ else {
+      console.log(that.words)
+    }
+  }
+
+  var apiRequest = function() {
+    var randomOffset = Math.floor(Math.random()*254290)
+    var callbackName = 'jsonp_callback_' + new Date().getTime() + "" + Math.floor(Math.random()*1000)
+      , requestUrl = "http://api.pearson.com/v2/dictionaries/entries?limit=25&offset=" + randomOffset + "&jsonp=" + callbackName
+    
+    window[callbackName] = function(data) {
+
+        document.head.removeChild(window[callbackName]["script"])
+
+        delete window[callbackName]
+
+        parseData(data)
+    }
+
+    window[callbackName]["script"] = document.createElement('script')
+    window[callbackName]["script"].src =  requestUrl
+
+    document.head.appendChild(window[callbackName]["script"])
+  }
+
+    apiRequest()
 }
+
 
 RandomWords.prototype.getWords = function() {
   return this.words
 }
 
-var a = new RandomWords(20, 25)
+var a = new RandomWords(200, 300)
 
 words = a.getWords()
 
