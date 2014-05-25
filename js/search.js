@@ -18,13 +18,14 @@ function WordList(words, callback){
     var callbackName = 'jsonp_callback_' + new Date().getTime() + "" + Math.floor(Math.random()*1000)
       , requestString = list.join(',')
       , requestUrl = "http://api.pearson.com/v2/dictionaries/ldoce5/entries?limit=25&headword=" + requestString + "&jsonp=" + callbackName
-    
+    //console.log("Request: ", requestUrl)
     window[callbackName] = function(data) {
 
         document.head.removeChild(window[callbackName]["script"])
 
         delete window[callbackName]
 
+        //console.log("Response: ", data)
         callback(data)
     };
 
@@ -160,6 +161,7 @@ function RandomWords(minChars, maxChars) {
 
         delete window[callbackName]
 
+
         parseData(data)
     }
 
@@ -179,6 +181,15 @@ RandomWords.prototype.getWords = function() {
 
 RandomWords.prototype.onFinish = function(callback) {
   this.callback = callback
+}
+
+
+function searchExample(){
+  var arr = ["sakdn", "cat", "building", "coder", "hack", "asdlknasd", "coin", "water", "asdkas", "sadasd", "true", "false"]
+  console.log("Input array: ", arr)
+  l2 = new WordList(arr, function(){
+  console.log("Output array: ", this.words)
+ })
 }
 
 // var a = new RandomWords(200, 300)

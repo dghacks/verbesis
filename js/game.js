@@ -185,7 +185,7 @@ function Menu(){
 
   var that = this
   $(this.controls.sizeUp).on('click', function(){
-    if(that.rows < 12 && that.cols < 12){
+    if(that.rows < 20 && that.cols < 20){
       that.rows++
       that.cols++
     }
